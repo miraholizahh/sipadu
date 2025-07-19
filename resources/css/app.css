@@ -1,0 +1,13 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.bg-custom-color {
+    background-color: #121827
+}
+.font-robotoslab {
+    font-family: 'Roboto Slab', serif;
+}
+.custom-text {
+    font-size: 1rem !important;
+}
