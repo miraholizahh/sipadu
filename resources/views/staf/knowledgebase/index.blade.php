@@ -27,7 +27,7 @@
                         </x-slot>
 
                         @php $num = 1; @endphp
-                        @foreach($knowledge_base as $item)
+                        @foreach($knowledge_bases as $item)
                             <tr>
                                 <td>{{ $num++ }}</td>
                                 <td>{{ $item->symptom->kode_gejala ?? '-' }}</td>

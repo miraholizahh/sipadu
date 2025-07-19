@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Patien;
+namespace App\Http\Controllers\Patient;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -16,7 +16,7 @@ class DiagnosisController extends Controller
     public function create()
     {
         $symptoms = Symptom::all();
-        return view('patien.diagnosis.form', compact('symptoms'));
+        return view('patient.diagnosis.form', compact('symptoms'));
     }
 
     public function store(Request $request)
@@ -43,12 +43,16 @@ class DiagnosisController extends Controller
         $diagnosis->symptom()->attach($request->symptoms);
 
         return redirect()
-            ->route('diagnosis.create')
-            ->with('result', [
-                'penyakit' => $result['penyakit'],
-                'solusi' => $result['solusi'],
-            ])
-            ->with('success', 'Diagnosa berhasil disimpan.');
+        ->route('diagnosis.create')
+        ->with('result', [
+            'penyakit' => $result['penyakit'],
+            'solusi' => $result['solusi'],
+            'nama' => Auth::user()->nama,
+            'jenis_kelamin' => Auth::user()->jenis_kelamin,
+            'tanggal_diagnosa' => now()->format('d-m-Y H:i'),
+        ])
+        ->with('success', 'Diagnosa berhasil disimpan.');
+    
     }
 
     protected function dempsterShafer($selectedSymptoms, $knowledgeBase)
@@ -82,11 +86,11 @@ class DiagnosisController extends Controller
 
     public function riwayat()
     {
-        $diagnosis = Diagnosis::with(['symptoms', 'disease'])
+        $diagnosis = Diagnosis::with(['user', 'symptoms', 'disease'])
             ->where('idUser', auth()->id())
             ->latest()
             ->get();
 
-        return view('patien.diagnosis.riwayat', compact('diagnosis'));
+        return view('patient.diagnosis.riwayat', compact('diagnosis'));
     }
 }

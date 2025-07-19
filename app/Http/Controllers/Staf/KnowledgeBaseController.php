@@ -7,13 +7,12 @@ use Illuminate\Http\Request;
 use App\Models\KnowledgeBase;
 use App\Models\Symptom;
 use App\Models\Disease;
-use App\Models\DempsterShafer;
 
 class KnowledgeBaseController extends Controller
 {
     public function index()
     {
-        $knowledge_bases['knowledge_base'] = KnowledgeBase::with(['symptom', 'disease', 'dempsterShafer'])->get();
+        $knowledge_bases['knowledge_bases'] = KnowledgeBase::with(['symptom', 'disease'])->get();
         return view('staf.knowledgebase.index', $knowledge_bases);
     }
 
@@ -21,8 +20,7 @@ class KnowledgeBaseController extends Controller
     {
         $symptoms = Symptom::all();
         $diseases = Disease::all();
-        $dempster_shafers = DempsterShafer::all();
-        return view('staf.knowledgebase.create', compact('symptoms', 'diseases', 'dempster_shafers'));
+        return view('staf.knowledgebase.create', compact('symptoms', 'diseases'));
     }
 
     public function store(Request $request)
@@ -30,7 +28,6 @@ class KnowledgeBaseController extends Controller
     $validatedData = $request->validate([
         'idSymptom'           => 'required|exists:symptoms,id',
         'idDisease'           => 'required|exists:diseases,id',
-        'idDempsterShafer'    => 'nullable|exists:dempster_shafers,id',
         'bobot'               => 'required|numeric|min:0|max:1',
     ]);
 
@@ -53,9 +50,8 @@ class KnowledgeBaseController extends Controller
         $knowledge_base = KnowledgeBase::findOrFail($id);
         $symptoms = Symptom::all();
         $diseases = Disease::all();
-        $dempster_shafers = DempsterShafer::all();
 
-        return view('staf.knowledgebase.edit', compact('knowledge_base', 'symptoms', 'diseases', 'dempster_shafers'));
+        return view('staf.knowledgebase.edit', compact('knowledge_base', 'symptoms', 'diseases'));
     }
 
     public function update(Request $request, $id)
@@ -63,7 +59,6 @@ class KnowledgeBaseController extends Controller
         $validatedData = $request->validate([
             'idSymptom' => 'required|exists:symptoms,id',
             'idDisease' => 'required|exists:diseases,id',
-            'idDempsterShafer' => 'nullable|exists:dempster_shafers,id',
             'bobot'     => 'required|numeric|min:0|max:1',
         ]);
 

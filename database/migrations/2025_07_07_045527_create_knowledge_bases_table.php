@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('knowledge_base', function (Blueprint $table) {
+        Schema::create('knowledge_bases', function (Blueprint $table) {
             $table->id();
             $table->float('bobot');
             $table->timestamps();
@@ -19,8 +19,6 @@ return new class extends Migration
             $table->foreign('idSymptom')->references('id')->on('symptoms')->onDelete('cascade')->onUpdate('cascade');
             $table->unsignedBigInteger('idDisease');
             $table->foreign('idDisease')->references('id')->on('diseases')->onDelete('cascade')->onUpdate('cascade');
-            $table->unsignedBigInteger('idDempsterShafer')->nullable();
-            $table->foreign('idDempsterShafer')->references('id')->on('dempster_shafers')->onDelete('cascade')->onUpdate('cascade');
         });
     }
 
@@ -29,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('knowledge_base');
+        Schema::dropIfExists('knowledge_bases');
     }
 };

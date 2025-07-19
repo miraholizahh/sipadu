@@ -23,6 +23,8 @@
                             <thead class="bg-gray-700 text-white">
                                 <tr>
                                     <th class="border px-4 py-2">No</th>
+                                    <th class="border px-4 py-2">Nama</th>
+                                    <th class="border px-4 py-2">Jenis Kelamin</th>
                                     <th class="border px-4 py-2">Tanggal</th>
                                     <th class="border px-4 py-2">Penyakit</th>
                                     <th class="border px-4 py-2">Solusi</th>

@@ -11,5 +11,11 @@ class DempsterShafer extends Model
     protected $fillable = [
         'belief',
         'plausibility',
+        'idBasisPengetahuan',
     ];
+
+    public function knowledge_bases()
+    {
+        return $this->belongsTo(KnowledgeBase::class, 'idBasisPengetahuan');
+    }
 }

@@ -7,7 +7,7 @@ use App\Http\Controllers\Staf\SymptomController;
 use App\Http\Controllers\Staf\DiseaseController;
 use App\Http\Controllers\Staf\KnowledgeBaseController;
 use App\Http\Controllers\Staf\DempsterShaferController;
-use App\Http\Controllers\Patien\DiagnosisController;
+use App\Http\Controllers\Patient\DiagnosisController;
 use App\Http\Controllers\User\Controller;
 use Illuminate\Support\Facades\Route;
 

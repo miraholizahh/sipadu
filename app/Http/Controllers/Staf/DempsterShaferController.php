@@ -83,6 +83,7 @@ class DempsterShaferController extends Controller
         DempsterShafer::create([
             'belief' => $beliefFinal,
             'plausibility' => $plausibilityFinal,
+            'idBasisPengetahuan' => $bpas->first()->id
         ]);
 
         return redirect()->route('dempstershafer.index')->with([

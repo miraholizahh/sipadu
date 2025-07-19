@@ -13,9 +13,11 @@ return new class extends Migration
     {
         Schema::create('dempster_shafers', function (Blueprint $table) {
             $table->id();
-            $table->decimal('belief', 5,2);
-            $table->decimal('plausibility', 5,2);
+            $table->float('belief');
+            $table->float('plausibility');
+            $table->unsignedBigInteger('idBasisPengetahuan');
             $table->timestamps();
+            $table->foreign('idBasisPengetahuan')->references('id')->on('knowledge_bases')->onDelete('cascade')->onUpdate('cascade');
         });
     }
 

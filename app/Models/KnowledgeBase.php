@@ -9,13 +9,12 @@ class KnowledgeBase extends Model
 {
     use HasFactory;
     
-    protected $table = 'knowledge_base';
+    protected $table = 'knowledge_bases';
 
     protected $fillable = [
         'bobot',
         'idSymptom',
         'idDisease',
-        'idDempsterShafer',
     ];
 
     public function symptom()
@@ -28,8 +27,4 @@ class KnowledgeBase extends Model
         return $this->belongsTo(Disease::class, 'idDisease');
     }
 
-    public function dempsterShafer()
-    {
-        return $this->belongsTo(DempsterShafer::class, 'idDempsterShafer');
-    }
 }

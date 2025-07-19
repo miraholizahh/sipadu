@@ -20,10 +20,11 @@
 
                     @if ($diagnosis)
                         <div class="mb-6 space-y-2">
+                            <p><strong>Nama</strong>{{ $diagnosis->user->nama ?? '-' }}</p>
+                            <p><strong>Jenis Kelamin</strong>{{ $diagnosis->user->jenis_kelamin ?? '-' }}</p>
                             <p><strong>Tanggal Diagnosa:</strong> {{ \Carbon\Carbon::parse($diagnosis->tanggal_diagnosa)->format('d-m-Y H:i') }}</p>
                             <p><strong>Penyakit:</strong> {{ $diagnosis->disease->nama_penyakit ?? 'Tidak diketahui' }}</p>
                             <p><strong>Hasil Kemungkinan:</strong> {{ $diagnosis->hasil }}%</p>
-                            <p><strong>Tingkat Kemungkinan:</strong> {{ $diagnosis->tingkat_kemungkinan }}</p>
                             <p><strong>Solusi:</strong> {{ $diagnosis->disease->solusi ?? '-' }}</p>
                         </div>
 

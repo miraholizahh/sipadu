@@ -36,18 +36,6 @@
                             <x-input-error class="mt-2" :messages="$errors->get('idDisease')" />
                         </div>
                         <div class="max-w-xl">
-                            <x-input-label for="idDempsterShafer" value="Data Dempster-Shafer (Opsional)" />
-                            <select id="idDempsterShafer" name="idDempsterShafer" class="mt-1 block w-full rounded text-black">
-                                <option value="">-- Pilih Nilai DS --</option>
-                                @foreach ($dempster_shafers as $ds)
-                                    <option value="{{ $ds->id }}" {{ old('idDempsterShafer') == $ds->id ? 'selected' : '' }}>
-                                        Belief: {{ $ds->belief }} | Plausibility: {{ $ds->plausibility }}
-                                    </option>
-                                @endforeach
-                            </select>
-                            <x-input-error class="mt-2" :messages="$errors->get('idDempsterShafer')" />
-                        </div>
-                        <div class="max-w-xl">
                             <x-input-label for="bobot" value="Bobot" />
                             <x-text-input id="bobot" type="text" name="bobot" class="mt-1 block w-full" value="{{ old('bobot') }}" required />
                             <x-input-error class="mt-2" :messages="$errors->get('bobot')" />
