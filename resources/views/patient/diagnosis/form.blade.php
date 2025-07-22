@@ -22,7 +22,7 @@
                         <div class="mb-6 p-4 bg-green-500 text-white rounded">
                             <p><strong>Nama:</strong> {{ session('result')['nama'] }}</p>
                             <p><strong>Jenis Kelamin:</strong> {{ session('result')['jenis_kelamin'] }}</p>
-                            <p><strong>Tanggal Diagnosa:</strong> {{ session('result')['tanggal_diagnosa'] }}</p>
+                            <p><strong>Tanggal Diagnosa:</strong> {{ \Carbon\Carbon::parse($diagnosis->tanggal_diagnosa)->format('d-m-Y H:i') }}</p>
                             <p><strong>Hasil Diagnosa:</strong> {{ session('result')['penyakit'] }}</p>
                             <p><strong>Solusi:</strong> {{ session('result')['solusi'] }}</p>
 

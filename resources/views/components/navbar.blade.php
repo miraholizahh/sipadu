@@ -19,7 +19,8 @@
                 <a class="font-bold text-sm uppercase tracking-wide text-gray-800 hover:text-gray-600 dark:text-gray-200 dark:hover:text-gray-400" href="contactnav">Kontak</a>
                 @if(Route::has('login'))
                 @auth 
-                <a class="font-bold text-sm uppercase tracking-wide text-gray-800 hover:text-gray-600 dark:text-gray-200 dark:hover:text-gray-400" href="{{ route('diagnosis.create') }}">Diagnosa</a>
+                <a class="font-bold text-sm uppercase tracking-wide text-gray-800 hover:text-gray-600 dark:text-gray-200 dark:hover:text-gray-400" href="{{ route('diagnosis.form') }}">Diagnosa</a>
+                <a class="font-bold text-sm uppercase tracking-wide text-gray-800 hover:text-gray-600 dark:text-gray-200 dark:hover:text-gray-400" href="{{ route('diagnosis.riwayat') }}">Riwayat Diagnosa</a>
                 <a class="font-bold text-sm uppercase tracking-wide text-gray-800 hover:text-gray-600 dark:text-gray-200 dark:hover:text-gray-400" href="{{ route('profile.edit') }}">Profil</a>
                 <div class="font-bold text-sm uppercase tracking-wide text-gray-800 hover:text-gray-600 dark:text-gray-200 dark:hover:text-gray-400">
                     <form method="POST" action="{{ route('logout') }}">

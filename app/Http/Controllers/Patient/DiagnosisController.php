@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Patient;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Staf\DempsterShaferController; 
 use Illuminate\Http\Request;
 use App\Models\Diagnosis;
 use App\Models\Symptom;
@@ -20,76 +21,59 @@ class DiagnosisController extends Controller
     }
 
     public function store(Request $request)
-    {
-        $request->validate([
-            'symptoms' => 'required|array|min:1',
-            'symptoms.*' => 'exists:symptoms,id',
-        ]);
+{
+    $request->validate([
+        'symptoms' => 'required|array|min:1',
+        'symptoms.*' => 'exists:symptoms,id',
+    ]);
 
-        $knowledgeBase = KnowledgeBase::with(['symptom', 'disease'])->get();
-        $result = $this->dempsterShafer($request->symptoms, $knowledgeBase);
+    // Siapkan array [idSymptom => bobot]
+    $knowledgeBase = KnowledgeBase::whereIn('idSymptom', $request->symptoms)->get();
 
-        if (!isset($result['idDisease'])) {
-            return back()->with('error', 'Diagnosa gagal. Gejala tidak ditemukan dalam basis pengetahuan.');
-        }
-
-        $diagnosis = Diagnosis::create([
-            'tanggal_diagnosa' => Carbon::now(),
-            'hasil_diagnosa' => $result['penyakit'],
-            'idUser' => Auth::id(),
-            'idDisease' => $result['idDisease'],
-        ]);
-
-        $diagnosis->symptom()->attach($request->symptoms);
-
-        return redirect()
-        ->route('diagnosis.create')
-        ->with('result', [
-            'penyakit' => $result['penyakit'],
-            'solusi' => $result['solusi'],
-            'nama' => Auth::user()->nama,
-            'jenis_kelamin' => Auth::user()->jenis_kelamin,
-            'tanggal_diagnosa' => now()->format('d-m-Y H:i'),
-        ])
-        ->with('success', 'Diagnosa berhasil disimpan.');
-    
+    if ($knowledgeBase->isEmpty()) {
+        return back()->with('error', 'Gejala tidak ditemukan dalam basis pengetahuan.');
     }
 
-    protected function dempsterShafer($selectedSymptoms, $knowledgeBase)
+    $inputGejala = [];
+    foreach ($knowledgeBase as $item) {
+        $inputGejala[$item->idSymptom] = $item->bobot;
+    }
+
+    $result = DempsterShaferController::store($inputGejala);
+
+    if (!$result || !isset($result['idDisease'])) {
+        return back()->with('error', 'Diagnosa gagal.');
+    }
+
+    // Simpan hasil ke tabel diagnosis
+    $diagnosis = Diagnosis::create([
+        'tanggal_diagnosa' => Carbon::now(),
+        'hasil_diagnosa' => round($result['belief'] * 100, 2),
+        'idUser' => Auth::id(),
+        'idDisease' => $result['idDisease'],
+    ]);
+
+    $diagnosis->symptom()->attach($request->symptoms);
+
+    return redirect()
+        ->route('diagnosis.result', $diagnosis->id)
+        ->with('success', 'Diagnosa berhasil disimpan.');
+}
+
+    public function show($id)
     {
-        $weights = [];
-
-        foreach ($knowledgeBase as $item) {
-            if (in_array($item->idSymptom, $selectedSymptoms)) {
-                $weights[$item->idDisease] = ($weights[$item->idDisease] ?? 0) + $item->bobot;
-            }
-        }
-
-        if (empty($weights)) {
-            return null;
-        }
-
-        arsort($weights);
-        $topDiseaseId = array_key_first($weights);
-        $topDisease = Disease::find($topDiseaseId);
-
-        if (!$topDisease) {
-            return null;
-        }
-
-        return [
-            'idDisease' => $topDisease->id,
-            'penyakit' => $topDisease->nama_penyakit,
-            'solusi' => $topDisease->solusi,
-        ];
+        $diagnosis = Diagnosis::with(['symptom', 'disease'])->findOrFail($id);
+        return view('patient.diagnosis.result', compact('diagnosis'));
     }
 
     public function riwayat()
     {
-        $diagnosis = Diagnosis::with(['user', 'symptoms', 'disease'])
-            ->where('idUser', auth()->id())
-            ->latest()
-            ->get();
+        $user = Auth::user();
+
+        $diagnosis = Diagnosis::with(['disease', 'symptom', 'user'])
+                        ->where('idUser', $user->id)
+                        ->orderBy('created_at', 'asc')
+                        ->get();
 
         return view('patient.diagnosis.riwayat', compact('diagnosis'));
     }

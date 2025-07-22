@@ -14,12 +14,14 @@ return new class extends Migration
         Schema::create('diagnosis', function (Blueprint $table) {
             $table->id();
             $table->date('tanggal_diagnosa');
-            $table->string('hasil_diagnosa', 255);
+            $table->float('hasil_diagnosa');
             $table->timestamps();
             $table->unsignedBigInteger('idUser');
             $table->foreign('idUser')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
             $table->unsignedBigInteger('idDisease')->nullable();
             $table->foreign('idDisease')->references('id')->on('diseases')->onDelete('cascade')->onUpdate('cascade');
+            $table->unsignedBigInteger('idDempsterShafer')->nullable();
+            $table->foreign('idDempsterShafer')->references('id')->on('dempster_shafers')->onDelete('set null');
         });
     }
 

@@ -79,18 +79,20 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
 });
 
 Route::middleware(['auth'])->group(function () {
-    Route::get('/diagnosis', [DiagnosisController::class, 'create'])->name('diagnosis.create');
+    Route::get('/diagnosis', [DiagnosisController::class, 'create'])->name('diagnosis.form');
     Route::post('/diagnosis', [DiagnosisController::class, 'store'])->name('diagnosis.store');
     Route::get('/diagnosis/riwayat', [DiagnosisController::class, 'riwayat'])->name('diagnosis.riwayat');
+    Route::get('/diagnosis/result/{id}', [DiagnosisController::class, 'show'])->name('diagnosis.result');
+
 });
 
-Route::middleware(['auth', 'role:admin'])->group(function () {
+Route::middleware(['auth'])->group(function () {
     Route::get('/dempstershafer', [DempsterShaferController::class, 'index'])->name('dempstershafer.index');
     Route::get('/dempstershafer/create', [DempsterShaferController::class, 'create'])->name('dempstershafer.create');
     Route::post('/dempstershafer', [DempsterShaferController::class, 'store'])->name('dempstershafer.store');
-    Route::get('/dempstershafer/{id}/edit', [DempsterShaferController::class, 'edit'])->name('dempstershafer.edit');
-    Route::put('/dempstershafer/{id}', [DempsterShaferController::class, 'update'])->name('dempstershafer.update');
-    Route::delete('/dempstershafer/{id}', [DempsterShaferController::class, 'destroy'])->name('dempstershafer.destroy');
+    // Route::get('/dempstershafer/{id}/edit', [DempsterShaferController::class, 'edit'])->name('dempstershafer.edit');
+    // Route::put('/dempstershafer/{id}', [DempsterShaferController::class, 'update'])->name('dempstershafer.update');
+    // Route::delete('/dempstershafer/{id}', [DempsterShaferController::class, 'destroy'])->name('dempstershafer.destroy');
 });
 
 

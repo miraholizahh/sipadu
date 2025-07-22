@@ -8,12 +8,13 @@ use App\Models\DempsterShafer;
 use App\Models\Symptom;
 use App\Models\KnowledgeBase;
 use App\Models\Disease;
+use App\Models\Diagnosis;
 
 class DempsterShaferController extends Controller
 {
     public function index()
     {
-        $data['dempster_shafers'] = DempsterShafer::all();
+        $data['dempster_shafers'] = DempsterShafer::with('knowledge_bases')->get();
         return view('staf.dempstershafer.index', $data);
     }
 
@@ -23,17 +24,16 @@ class DempsterShaferController extends Controller
         return view('staf.dempstershafer.create', compact('symptom'));
     }
 
-    public function store(Request $request)
+    // ⬇️ Method ini menggantikan fungsi `hitung()` sebelumnya
+    public static function store(array $inputGejala)
     {
-        $validatedData = $request->validate([
-            'gejala' => 'required|array|min:1',
-        ]);
-
-        $inputGejala = $validatedData['gejala'];
-
         $bpas = KnowledgeBase::with(['symptom', 'disease'])
             ->whereIn('idSymptom', array_keys($inputGejala))
             ->get();
+
+        if ($bpas->isEmpty()) {
+            return null;
+        }
 
         $combinedBPA = [];
 
@@ -76,19 +76,17 @@ class DempsterShaferController extends Controller
         }
 
         arsort($combinedBPA);
-        $mostProbable = array_key_first($combinedBPA);
-        $beliefFinal = $combinedBPA[$mostProbable];
+        $topKey = array_key_first($combinedBPA);
+        $beliefFinal = $combinedBPA[$topKey];
         $plausibilityFinal = 1 - ($combinedBPA['Θ'] ?? 0);
 
-        DempsterShafer::create([
+        if ($topKey === 'Θ') return null;
+
+        return [
+            'idDisease' => $topKey,
             'belief' => $beliefFinal,
             'plausibility' => $plausibilityFinal,
-            'idBasisPengetahuan' => $bpas->first()->id
-        ]);
+        ];
+}
 
-        return redirect()->route('dempstershafer.index')->with([
-            'message' => 'Perhitungan Dempster-Shafer berhasil disimpan',
-            'alert-type' => 'success'
-        ]);
-    }
 }

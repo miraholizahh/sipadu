@@ -8,14 +8,20 @@ use Illuminate\Database\Eloquent\Model;
 class DempsterShafer extends Model
 {
     use HasFactory;
+
     protected $fillable = [
         'belief',
         'plausibility',
-        'idBasisPengetahuan',
     ];
 
     public function knowledge_bases()
     {
-        return $this->belongsTo(KnowledgeBase::class, 'idBasisPengetahuan');
+        return $this->belongsToMany(KnowledgeBase::class, 'dempster_shafer_knowledge_base', 'dempster_shafer_id', 'knowledge_base_id')->withTimestamps();
     }
+
+    public function diagnosis()
+    {
+        return $this->hasMany(Diagnosis::class, 'idDempsterShafer');
+    }
+
 }

@@ -15,9 +15,7 @@ return new class extends Migration
             $table->id();
             $table->float('belief');
             $table->float('plausibility');
-            $table->unsignedBigInteger('idBasisPengetahuan');
             $table->timestamps();
-            $table->foreign('idBasisPengetahuan')->references('id')->on('knowledge_bases')->onDelete('cascade')->onUpdate('cascade');
         });
     }
 
