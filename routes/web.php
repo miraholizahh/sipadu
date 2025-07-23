@@ -8,6 +8,7 @@ use App\Http\Controllers\Staf\DiseaseController;
 use App\Http\Controllers\Staf\KnowledgeBaseController;
 use App\Http\Controllers\Staf\DempsterShaferController;
 use App\Http\Controllers\Patient\DiagnosisController;
+use App\Http\Controllers\Staf\LaporanController;
 use App\Http\Controllers\User\Controller;
 use Illuminate\Support\Facades\Route;
 
@@ -95,5 +96,6 @@ Route::middleware(['auth'])->group(function () {
     // Route::delete('/dempstershafer/{id}', [DempsterShaferController::class, 'destroy'])->name('dempstershafer.destroy');
 });
 
+Route::get('/laporan/diagnosa', [LaporanController::class, 'riwayatDiagnosa'])->name('laporan.diagnosa');
 
 require __DIR__.'/auth.php';

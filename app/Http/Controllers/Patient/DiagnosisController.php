@@ -62,7 +62,7 @@ class DiagnosisController extends Controller
 
     public function show($id)
     {
-        $diagnosis = Diagnosis::with(['symptom', 'disease'])->findOrFail($id);
+        $diagnosis = Diagnosis::with(['user', 'symptom', 'disease', 'dempsterShafer'])->findOrFail($id);
         return view('patient.diagnosis.result', compact('diagnosis'));
     }
 

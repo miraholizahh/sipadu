@@ -41,11 +41,9 @@
                             <p><strong>Tanggal Diagnosa:</strong> {{ \Carbon\Carbon::parse($diagnosis->tanggal_diagnosa)->format('d-m-Y') }}</p>
                             <p><strong>Penyakit:</strong> {{ $diagnosis->disease->nama_penyakit ?? 'Tidak diketahui' }}</p>
                             <p><strong>Hasil Kemungkinan:</strong> {{ $diagnosis->hasil_diagnosa ?? '-' }}% ({{ interpretasiKemungkinan($diagnosis->hasil_diagnosa) }})</p>
-
                             {{-- Tambahan Nilai Belief dan Plausibility --}}
-                            <p><strong>Nilai Belief:</strong> {{ $diagnosis->dempster->belief ?? '-' }}</p>
-                            <p><strong>Nilai Plausibility:</strong> {{ $diagnosis->dempster->plausibility ?? '-' }}</p>
-
+                            <p><strong>Nilai Belief:</strong> {{ $diagnosis->dempsterShafer->belief ?? '-' }}</p>
+                            <p><strong>Nilai Plausibility:</strong> {{ $diagnosis->dempsterShafer->plausibility ?? '-' }}</p>
                             <p><strong>Solusi:</strong> {{ $diagnosis->disease->solusi ?? '-' }}</p>
                         </div>
 

@@ -23,19 +23,25 @@ class SymptomController extends Controller
     public function store(Request $request)
 {
     $validatedData = $request->validate([
-        'kode_gejala' => 'required|string|max:10',
-        'nama_gejala' => 'required|string|max:255',
+        'kode_penyakit' => 'required|string|max:10|unique:diseases,kode_penyakit',
+        'nama_penyakit' => 'required|string|max:255',
+        'keterangan' => 'required|string|max:255',
+        'solusi' => 'required|string|max:255',
+    ], [
+        'kode_penyakit.unique' => 'Kode penyakit sudah ada, silakan gunakan kode lain.',
     ]);
 
-    Symptom::create($validatedData);
-    $notification = array(
-        'message' => 'Data gejala berhasil ditambahkan',
+    Disease::create($validatedData);
+
+    $notification = [
+        'message' => 'Data penyakit berhasil ditambahkan',
         'alert-type' => 'success'
-    );
-    if($request->save == true) {
-        return redirect()->route('symptom.index')->with($notification);
+    ];
+
+    if ($request->save == true) {
+        return redirect()->route('disease.index')->with($notification);
     } else {
-        return redirect()->route('symptom.store')->with($notification);
+        return redirect()->route('disease.store')->with($notification);
     }
 }
 
