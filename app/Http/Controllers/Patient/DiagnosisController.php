@@ -11,6 +11,7 @@ use App\Models\Disease;
 use App\Models\KnowledgeBase;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class DiagnosisController extends Controller
 {
@@ -76,5 +77,13 @@ class DiagnosisController extends Controller
                         ->get();
 
         return view('patient.diagnosis.riwayat', compact('diagnosis'));
+    }
+
+    public function print($id)
+    {
+        $diagnosis = Diagnosis::with(['user', 'disease', 'symptom'])->findOrFail($id);
+
+        $pdf = Pdf::loadView('patient.diagnosis.print', compact('diagnosis'))->setPaper('a4', 'portrait');
+        return $pdf->stream('diagnosa_' . $diagnosis->user->nama . '.pdf');
     }
 }

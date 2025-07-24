@@ -8,14 +8,40 @@ use App\Models\Diagnosis;
 use App\Models\User;
 use App\Models\Disease;
 use App\Models\Symptom;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class LaporanController extends Controller
 {
-    public function riwayatDiagnosa()
+    public function diagnosa(Request $request)
     {
-        // Ambil data diagnosis beserta relasinya
-        $diagnosis = Diagnosis::with(['user', 'disease', 'symptom'])->get();
+        $query = Diagnosis::with(['user', 'disease', 'symptom']);
+
+        if ($request->filled('from') && $request->filled('to')) {
+            $query->whereBetween('tanggal_diagnosa', [$request->from, $request->to]);
+        }
+
+        $diagnosis = $query->orderBy('tanggal_diagnosa', 'asc')->get();
 
         return view('staf.laporan.diagnosa', compact('diagnosis'));
     }
+
+    public function search(Request $request)
+    {
+        $search = $request->input('search');
+
+        $diagnosis = Diagnosis::with(['user', 'disease', 'symptom'])
+                    ->where('tanggal_diagnosa', 'like', '%' . $search . '%')
+                    ->get();
+
+        return view('laporan.diagnosa', compact('diagnosis'));
+    }
+
+    public function print()
+    {
+        $diagnosis = Diagnosis::with(['user', 'disease', 'symptom'])->orderBy('tanggal_diagnosa', 'asc')->get();
+
+        $pdf = Pdf::loadView('staf.laporan.print', ['diagnosis' => $diagnosis]);
+        return $pdf->download('laporan_diagnosa.pdf');
+    }
+
 }

@@ -12,18 +12,6 @@ use App\Models\Diagnosis;
 
 class DempsterShaferController extends Controller
 {
-    // public function index()
-    // {
-    //     $data['dempster_shafers'] = DempsterShafer::with('knowledge_bases')->get();
-    //     // return view('staf.dempstershafer.index', $data);
-    // }
-
-    // public function create()
-    // {
-    //     $symptom = Symptom::all();
-    //     return view('staf.dempstershafer.create', compact('symptom'));
-    // }
-
     public static function store(array $inputGejala)
     {
         $bpas = KnowledgeBase::with(['symptom', 'disease'])

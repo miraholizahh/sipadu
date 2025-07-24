@@ -1,20 +1,68 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight text-custom" style="font-family: 'Roboto Slab', serif;">
+        <h2 class="font-semibold text-xl text-gray leading-tight">
             {{ __('Laporan Diagnosa') }}
         </h2>
     </x-slot>
 
     <style>
         .text-custom {
-            font-size: 1rem !important; 
+            font-size: 1rem !important;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.875rem;
+        }
+
+        th, td {
+            padding: 0.75rem;
+            border: 1px solid #e5e7eb;
+            text-align: left;
+            vertical-align: top;
+        }
+
+        thead {
+            background-color: #f9fafb;
+            color: #374151;
+            font-weight: 600;
+        }
+
+        tbody tr:hover {
+            background-color: #f3f4f6;
+        }
+
+        ul {
+            padding-left: 1rem;
+            list-style-type: disc;
         }
     </style>
 
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-custom-color overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 text-white">
+            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+                <div class="p-6 text-black">
+
+                    <form method="GET" action="{{ route('laporan.diagnosa') }}" class="mb-6 flex flex-wrap gap-4 items-end">
+                        <div>
+                            <label for="from" class="block text-sm font-medium text-gray-700">Dari Tanggal</label>
+                            <input type="date" name="from" id="from" value="{{ request('from') }}" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm px-3 py-2">
+                        </div>
+                        <div>
+                            <label for="to" class="block text-sm font-medium text-gray-700">Sampai Tanggal</label>
+                            <input type="date" name="to" id="to" value="{{ request('to') }}" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm px-3 py-2">
+                        </div>
+                        <div class="flex gap-2 mt-6">
+                            <button type="submit" class="inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700">
+                                Cari
+                            </button>
+                            <a href="{{ route('laporan.diagnosa.print') }}" class="inline-flex items-center px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700">
+                                Print PDF
+                            </a>
+                        </div>
+                    </form>                                    
+
                     @php
                         function interpretasiKemungkinan($percent) {
                             if ($percent == 100) return "Sangat Yakin";
@@ -53,7 +101,7 @@
                                 </td>
                                 <td>{{ $item->disease->solusi ?? '-' }}</td>
                                 <td>
-                                    <ul class="list-disc list-inside text-sm">
+                                    <ul>
                                         @foreach ($item->symptom as $symptom)
                                             <li>{{ $symptom->kode_gejala }} - {{ $symptom->nama_gejala }}</li>
                                         @endforeach

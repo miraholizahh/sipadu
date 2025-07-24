@@ -9,10 +9,12 @@
 <body class="bg-gray-100">
     <x-navbar />
 
-    <div class="py-12">
-        <div class="max-w-6xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-custom-color overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 text-white">
+    <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 mb-8">
+        <div class="bg-blue-200 overflow-hidden shadow-sm sm:rounded-lg">
+            <div class="py-10 pl-10 text-left text-black">
+                <div class="text-left text-2xl font-semibold mb-6">
+                    {{ __("Riwayat Diagnosa DBD") }}
+                </div>
 
                     @php
                         function interpretasiKemungkinan($percent) {
@@ -30,10 +32,6 @@
                         }
                     @endphp
 
-                    <div class="text-left text-2xl font-semibold mb-6">
-                        {{ __('Riwayat Diagnosa DBD') }}
-                    </div>
-
                     <div class="overflow-x-auto">
                         <table class="min-w-full table-auto border-collapse border border-white text-sm text-left">
                             <thead class="bg-gray-800 text-white">
@@ -46,6 +44,7 @@
                                     <th class="border px-4 py-2">Kemungkinan</th>
                                     <th class="border px-4 py-2">Solusi</th>
                                     <th class="border px-4 py-2">Gejala</th>
+                                    <th class="border px-4 py-2">Aksi</th>
                                 </tr>
                             </thead>
                             <tbody class="text-white">
@@ -68,6 +67,12 @@
                                                     <li>{{ $symptom->kode_gejala }} - {{ $symptom->nama_gejala }}</li>
                                                 @endforeach
                                             </ul>
+                                        </td>
+                                        <td class="border px-4 py-2">
+                                            <a href="{{ route('riwayat.diagnosa.print', ['id' => $item->id]) }}"
+                                               class="bg-green-600 hover:bg-green-700 text-white text-xs px-3 py-1 rounded">
+                                                Print PDF
+                                            </a>
                                         </td>
                                     </tr>
                                 @empty

@@ -84,6 +84,8 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/diagnosis', [DiagnosisController::class, 'store'])->name('diagnosis.store');
     Route::get('/diagnosis/riwayat', [DiagnosisController::class, 'riwayat'])->name('diagnosis.riwayat');
     Route::get('/diagnosis/result/{id}', [DiagnosisController::class, 'show'])->name('diagnosis.result');
+    Route::get('/riwayat-diagnosa/print/{id}', [DiagnosisController::class, 'print'])->name('riwayat.diagnosa.print');
+
 
 });
 
@@ -91,11 +93,10 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/dempstershafer', [DempsterShaferController::class, 'index'])->name('dempstershafer.index');
     Route::get('/dempstershafer/create', [DempsterShaferController::class, 'create'])->name('dempstershafer.create');
     Route::post('/dempstershafer', [DempsterShaferController::class, 'store'])->name('dempstershafer.store');
-    // Route::get('/dempstershafer/{id}/edit', [DempsterShaferController::class, 'edit'])->name('dempstershafer.edit');
-    // Route::put('/dempstershafer/{id}', [DempsterShaferController::class, 'update'])->name('dempstershafer.update');
-    // Route::delete('/dempstershafer/{id}', [DempsterShaferController::class, 'destroy'])->name('dempstershafer.destroy');
 });
 
-Route::get('/laporan/diagnosa', [LaporanController::class, 'riwayatDiagnosa'])->name('laporan.diagnosa');
+Route::get('/laporan/diagnosa', [LaporanController::class, 'diagnosa'])->name('laporan.diagnosa');
+Route::get('/laporan/diagnosa/search', [LaporanController::class, 'search'])->name('laporan.search');
+Route::get('/laporan/diagnosa/print', [LaporanController::class, 'print'])->name('laporan.diagnosa.print');
 
 require __DIR__.'/auth.php';
