@@ -23,7 +23,13 @@
       <h2 class="text-2xl font-bold mb-4">Sistem Pakar Diagnosa DBD</h2>
       <div class="text-base indent-paragraph leading-relaxed text-justify">
         <p>
-          Aplikasi berbasis web yang dirancang untuk membantu masyarakat mendeteksi dini penyakit Demam Berdarah Dengue (DBD) berdasarkan gejala yang dirasakan. Aplikasi ini menggunakan metode Dempster-Shafer untuk menganalisis gejala dan memberikan hasil diagnosa awal dengan tingkat keyakinan tertentu, sehingga pengguna dapat mengetahui kemungkinan terkena DBD tanpa harus langsung berkonsultasi dengan dokter.
+          Aplikasi berbasis web yang dirancang untuk membantu masyarakat mendeteksi dini penyakit Demam Berdarah Dengue (DBD) berdasarkan gejala yang dirasakan. Aplikasi ini menggunakan metode Dempster-Shafer untuk menganalisis gejala dan memberikan hasil diagnosa awal dengan tingkat keyakinan tertentu, sehingga pengguna dapat mengetahui kemungkinan terkena DBD tanpa harus berkonsultasi langsung dengan dokter.
+        </p>
+        <p>Sistem ini dibangun dengan basis pengetahuan yang berasal dari pakar medis, terutama dalam hal pengenalan gejala DBD. Informasi tersebut diolah secara sistematis dan dikembangkan menjadi aturan atau logika tertentu yang bisa diproses oleh sistem.
+        <h1>Manfaat sistem pakar dalam deteksi DBD:</h1> 
+           <li>Membantu masyarakat umum dalam mengenali tanda-tanda awal DBD dengan cepat dan mandiri.</li> 
+           <li>Meningkatkan kesadaran dini, sehingga kemungkinan keterlambatan penanganan bisa ditekan.</li> 
+           <li>Bersifat fleksibel dan dapat diakses kapan saja, selama terkoneksi dengan internet.</li> 
         </p>
       </div>
     </section>
@@ -33,34 +39,33 @@
       <h2 class="text-2xl font-bold mb-4">Metode Dempster-Shafer</h2>
       <div class="text-base indent-paragraph leading-relaxed text-justify">
         <p>
-          Metode Dempster-Shafer digunakan dalam aplikasi ini untuk mengolah dan menggabungkan informasi dari berbagai gejala yang dimasukkan oleh pengguna. Setiap gejala memiliki tingkat keyakinan (belief) terhadap kemungkinan penyakit DBD. Metode ini membantu sistem dalam menangani ketidakpastian dan ambiguitas data, yang sering muncul karena gejala DBD bisa mirip dengan penyakit lain seperti tipes, malaria, atau flu.
+          Metode Dempster-Shafer dalam aplikasi ini digunakan untuk mengolah dan menggabungkan informasi dari berbagai gejala yang dimasukkan oleh pengguna. Setiap gejala memiliki tingkat keyakinan (belief) terhadap kemungkinan penyakit DBD. Metode ini membantu sistem dalam menangani ketidakpastian dan ambiguitas data, yang sering muncul karena gejala DBD bisa mirip dengan penyakit lain seperti tipes, malaria, atau flu.
         </p>
       </div>
     </section>
 
-    <!-- Section: Misi -->
-    <section class="bg-yellow-300 rounded-xl shadow-md p-8">
-      <h2 class="text-2xl font-bold mb-4">Misi</h2>
+    <!-- Section: Fitur -->
+    <section class="bg-gray-100 rounded-xl shadow-md p-8">
+      <h2 class="text-2xl font-bold mb-4">Fitur Utama Aplikasi</h2>
       <ol class="list-decimal pl-6 space-y-2 text-base leading-relaxed">
-        <li>Meningkatkan kualitas sumber daya manusia yang sehat, cerdas, produktif, bertakwa dan berakhlak mulia menyambut era Society 5.0.</li>
-        <li>Mengembangkan ekonomi kerakyatan berbasis potensi lokal yang mandiri dan berdaya saing sesuai dengan era Industri 4.0.</li>
-        <li>Melanjutkan pembangunan infrastruktur untuk mengurangi kesenjangan serta mendukung peningkatan dan pemerataan pembangunan bidang pendidikan, kesehatan dan ekonomi.</li>
-        <li>Peningkatan pengelolaan dan perlindungan sumber daya alam untuk menjamin keseimbangan alam dan kelangsungan lingkungan hidup.</li>
-        <li>Pemantapan reformasi birokrasi dan transformasi birokrasi pemerintahan untuk menjamin terciptanya pelayanan publik yang semakin baik, profesional, efektif dan efisien serta adaptif menuju era Governance 3.0.</li>
+        <li>Deteksi dini gejala DBD.</li>
+        <li>Analisis berbasis metode Dempster-Shafer.</li>
+        <li>Riwayat diagnosa pengguna.</li>
+        <li>Antarmuka yang mudah digunakan.</li>
+        <li>Solusi tindakan awal (bukan pengganti dokter).</li>
       </ol>
     </section>
 
-    <!-- Section: Syarat dan Ketentuan -->
-    <section class="bg-yellow-300 rounded-xl shadow-md p-8">
-      <h2 class="text-2xl font-bold mb-4">Syarat dan Ketentuan Peminjaman Gedung</h2>
+    <!-- Section: Cara Menggunakan Aplikasi -->
+    <section class="bg-gray-100 rounded-xl shadow-md p-8">
+      <h2 class="text-2xl font-bold mb-4">Cara Menggunakan Aplikasi</h2>
       <ol class="list-decimal pl-6 space-y-2 text-base leading-relaxed">
-        <li>Peminjaman hanya dapat dilakukan oleh individu atau organisasi yang sah (karyawan, mahasiswa, organisasi internal, atau pihak luar dengan izin khusus).</li>
-        <li>Pengguna harus terdaftar dan memiliki akun untuk dapat melakukan peminjaman.</li>
-        <li>Peminjaman gedung hanya dapat dilakukan pada jam operasional yang telah ditentukan (06.00 - 22.00).</li>
-        <li>Pengguna harus memastikan jumlah peserta tidak melebihi kapasitas gedung yang dipilih.</li>
-        <li>Pengguna bertanggung jawab untuk menjaga kebersihan dan keamanan gedung selama peminjaman.</li>
-        <li>Pengguna dapat membatalkan peminjaman dengan memberikan pemberitahuan minimal 24 jam sebelum waktu peminjaman.</li>
-        <li>Pengguna harus mengembalikan gedung dalam kondisi baik dan tepat waktu.</li>
+        <li>Masuk atau daftar akun pengguna.</li>
+        <li>Pilih Menu "Diagnosa".</li>
+        <li>Pilih gejala yang anda rasakan, lalu tekan tombol "Simpan Gejala".</li>
+        <li>Hasil diagnosa akan terlihat langsung ketika anda menekan tombol "Simpan Gejala".</li>
+        <li>Jika anda ingin melihat riwayat diagnosa yang telah dilakukan sebelumnya, tekan menu "Riwayat Diagnosa".</li>
+        <li>Jika anda ingin memperlihatkan hasil diagnosa di sistem kepada dokter atau tim medis maka anda dapat mencetak riwayat diagnosa dengan menakan tombol "Cetak PDF".</li>
       </ol>
     </section>
 

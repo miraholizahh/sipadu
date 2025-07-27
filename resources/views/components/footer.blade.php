@@ -56,23 +56,6 @@
             </a>
 
             <a
-                href="https://x.com/humas_setda"
-                type="button"
-                class="rounded-full bg-[#55acee] p-3 uppercase leading-normal text-white shadow-dark-3 shadow-black/30 transition duration-150 ease-in-out hover:shadow-dark-1 focus:shadow-dark-1 focus:outline-none focus:ring-0 active:shadow-1 dark:text-white"
-                data-twe-ripple-init
-                data-twe-ripple-color="light">
-                <span class="mx-auto [&>svg]:h-5 [&>svg]:w-5">
-                <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="currentColor"
-                    viewBox="0 0 512 512">
-                    <path
-                    d="M389.2 48h70.6L305.6 224.2 487 464H345L233.7 318.6 106.5 464H35.8L200.7 275.5 26.8 48H172.4L272.9 180.9 389.2 48zM364.4 421.8h39.1L151.1 88h-42L364.4 421.8z" />
-                </svg>
-                </span>
-            </a>
-
-            <a
                 href="https://maps.app.goo.gl/ouGnm9jUUm4ySyQt6"
                 target="_blank"
                 type="button"

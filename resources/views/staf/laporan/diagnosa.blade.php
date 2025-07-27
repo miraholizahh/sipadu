@@ -66,7 +66,7 @@
                             </button>
                             <a href="{{ route('laporan.diagnosa.print', ['from' => request('from'), 'to' => request('to')]) }}"
                                class="inline-flex items-center px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700">
-                                Print PDF
+                                Cetak PDF
                             </a>
                         </div>
                     </form>
