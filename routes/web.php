@@ -9,9 +9,9 @@ use App\Http\Controllers\Staf\KnowledgeBaseController;
 use App\Http\Controllers\Staf\DempsterShaferController;
 use App\Http\Controllers\Patient\DiagnosisController;
 use App\Http\Controllers\Staf\LaporanController;
+use App\Http\Controllers\Staf\SolutionController;
 use App\Http\Controllers\User\Controller;
 use Illuminate\Support\Facades\Route;
-
 
 
 Route::get('/', function () {
@@ -32,10 +32,14 @@ Route::get('/contactnav', function () {
 
 
 
-Route::middleware('auth')->group(function () {
+Route::middleware('auth', 'role:admin')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+});
+
+Route::middleware(['auth', 'role:pasien'])->group(function () {
+    Route::get('/profile/user-edit', [ProfileController::class, 'edit2'])->name('profile.user-edit');
 });
 
 Route::middleware(['auth', 'role:admin'])->group(function () {
@@ -98,5 +102,15 @@ Route::middleware(['auth'])->group(function () {
 Route::get('/laporan/diagnosa', [LaporanController::class, 'diagnosa'])->name('laporan.diagnosa');
 Route::get('/laporan/diagnosa/search', [LaporanController::class, 'search'])->name('laporan.search');
 Route::get('/laporan/diagnosa/print', [LaporanController::class, 'print'])->name('laporan.diagnosa.print');
+
+Route::middleware(['auth', 'role:admin'])->group(function () {
+    Route::get('/solution', [SolutionController::class, 'index'])->name('solution.index');
+    Route::get('/solution/create', [SolutionController::class, 'create'])->name('solution.create');
+    Route::post('/solution', [SolutionController::class, 'store'])->name('solution.store');
+    Route::get('/solution/{id}/edit', [SolutionController::class, 'edit'])->name('solution.edit');
+    Route::put('/solution/{id}', [SolutionController::class, 'update'])->name('solution.update');
+    Route::delete('/solution/{id}', [SolutionController::class, 'destroy'])->name('solution.destroy');
+
+});
 
 require __DIR__.'/auth.php';

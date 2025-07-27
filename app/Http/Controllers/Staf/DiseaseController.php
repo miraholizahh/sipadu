@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Staf;
 
 use App\Http\Controllers\Controller;
 use App\Models\Disease;
+use App\Models\Solution;
 use App\Models\Roles;
 use Illuminate\Http\Request;
 
@@ -11,39 +12,41 @@ class DiseaseController extends Controller
 {
     public function index()
     {
-        $disease['diseases'] = Disease::all();
+        $disease['diseases'] = Disease::all(); 
         return view('staf.disease.index', $disease);
     }
 
+
     public function create()
     {
-        return view('staf.disease.create');
+        $solutions = Solution::all();
+        return view('staf.disease.create', compact('solutions'));
     }
 
     public function store(Request $request)
-{
-    $validatedData = $request->validate([
-        'kode_penyakit' => 'required|string|max:10|unique:diseases,kode_penyakit',
-        'nama_penyakit' => 'required|string|max:255',
-        'keterangan' => 'required|string|max:255',
-        'solusi' => 'required|string|max:255',
-    ], [
-        'kode_penyakit.unique' => 'Kode penyakit sudah ada, silakan gunakan kode lain.',
-    ]);
+    {
+        $validatedData = $request->validate([
+            'kode_penyakit' => 'required|string|max:10|unique:diseases,kode_penyakit',
+            'nama_penyakit' => 'required|string|max:255',
+            'keterangan' => 'required|string|max:1000',
+        ], [
+            'kode_penyakit.unique' => 'Kode penyakit sudah ada, silakan gunakan kode lain.',
+        ]);
 
-    Disease::create($validatedData);
+        Disease::create($validatedData);
 
-    $notification = [
-        'message' => 'Data penyakit berhasil ditambahkan',
-        'alert-type' => 'success'
-    ];
+        $notification = [
+            'message' => 'Data penyakit berhasil ditambahkan',
+            'alert-type' => 'success'
+        ];
 
-    if ($request->save == true) {
-        return redirect()->route('disease.index')->with($notification);
-    } else {
-        return redirect()->route('disease.store')->with($notification);
-    }
-}
+        if ($request->save == true) {
+            return redirect()->route('disease.index')->with($notification);
+        } else {
+            return redirect()->route('disease.store')->with($notification);
+        }
+    }   
+
 
     public function edit($id)
     {
@@ -58,7 +61,6 @@ class DiseaseController extends Controller
             'kode_penyakit' => 'required|string|max:10',
             'nama_penyakit' => 'required|string|max:255',
             'keterangan' => 'required|string|max:255',
-            'solusi' => 'required|string|max:255',
         ]);
     
         Disease::where('id', $id)->update($validatedData);

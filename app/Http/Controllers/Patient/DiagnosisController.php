@@ -63,7 +63,7 @@ class DiagnosisController extends Controller
 
     public function show($id)
     {
-        $diagnosis = Diagnosis::with(['user', 'symptom', 'disease', 'dempsterShafer'])->findOrFail($id);
+        $diagnosis = Diagnosis::with(['user', 'symptom', 'disease'])->findOrFail($id);
         return view('patient.diagnosis.result', compact('diagnosis'));
     }
 
@@ -81,9 +81,10 @@ class DiagnosisController extends Controller
 
     public function print($id)
     {
-        $diagnosis = Diagnosis::with(['user', 'disease', 'symptom'])->findOrFail($id);
+        $diagnosis = Diagnosis::with(['user', 'symptom', 'disease.solutions'])->findOrFail($id);
 
         $pdf = Pdf::loadView('patient.diagnosis.print', compact('diagnosis'))->setPaper('a4', 'portrait');
         return $pdf->stream('diagnosa_' . $diagnosis->user->nama . '.pdf');
     }
+
 }

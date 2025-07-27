@@ -20,6 +20,7 @@
             padding: 0.75rem;
             border: 1px solid #e5e7eb;
             text-align: left;
+            vertical-align: top;
         }
 
         thead {
@@ -45,9 +46,12 @@
             display: inline;
         }
 
-        .aksi-buttons .text-custom {
-            display: flex;
-            align-items: center;
+        .wrap-cell {
+            max-width: 300px;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+            line-height: 1.5;
         }
     </style>
 
@@ -56,7 +60,9 @@
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-black">
                     <div class="text-right mb-4">
-                        <x-primary-button tag="a" href="{{ route('symptom.create') }}" class="text-custom">Tambah Data</x-primary-button>
+                        <x-primary-button tag="a" href="{{ route('symptom.create') }}" class="text-custom">
+                            Tambah Data
+                        </x-primary-button>
                     </div>
 
                     <x-table>
@@ -74,7 +80,7 @@
                         <tr>
                             <td class="text-custom">{{ $num++ }}</td>
                             <td class="text-custom">{{ $symptom->kode_gejala }}</td>
-                            <td class="text-custom">{{ $symptom->nama_gejala }}</td>
+                            <td class="text-custom wrap-cell">{{ $symptom->nama_gejala }}</td>
                             <td class="text-custom aksi-buttons">
                                 <x-warning-button tag="a" href="{{ route('symptom.edit', $symptom->id) }}" class="text-custom">
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">

@@ -20,8 +20,6 @@ return new class extends Migration
             $table->foreign('idUser')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
             $table->unsignedBigInteger('idDisease')->nullable();
             $table->foreign('idDisease')->references('id')->on('diseases')->onDelete('cascade')->onUpdate('cascade');
-            $table->unsignedBigInteger('idDempsterShafer')->nullable();
-            $table->foreign('idDempsterShafer')->references('id')->on('dempster_shafers')->onDelete('set null');
         });
     }
 

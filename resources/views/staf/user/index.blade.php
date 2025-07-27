@@ -64,10 +64,8 @@
                             <tr>
                                 <th class="text-custom">No</th>
                                 <th class="text-custom">Nama</th>
-                                <th class="text-custom">User ID</th>
                                 <th class="text-custom">Email</th>
                                 <th class="text-custom">Telepon</th>
-                                <th class="text-custom">Kata Sandi</th>
                                 <th class="text-custom">Alamat</th>
                                 <th class="text-custom">Jenis Kelamin</th>
                                 <th class="text-custom">Aksi</th>
@@ -80,10 +78,8 @@
                         <tr>
                             <td class="text-custom">{{ $num++ }}</td>
                             <td class="text-custom">{{ $user->nama }}</td>
-                            <td class="text-custom">{{ $user->id }}</td>
                             <td class="text-custom">{{ $user->email }}</td>
                             <td class="text-custom">{{ $user->telepon }}</td>
-                            <td class="text-custom">Tersembunyi</td>
                             <td class="text-custom">{{ $user->alamat }}</td>
                             <td class="text-custom">{{ $user->jenis_kelamin }}</td>
                             <td class="text-custom aksi-buttons">

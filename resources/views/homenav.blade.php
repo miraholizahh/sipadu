@@ -1,72 +1,54 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Selamat Datang di SIPADU-DBD</title>
+    <title>SIPADU-DBD - Diagnosa Demam Berdarah</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
-    <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap" rel="stylesheet">
     <style>
         body {
-            margin: 0;
-            font-family: 'Nunito', sans-serif;
-        }
-        .navbar {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background-color: #fff;
-            padding: 20px 50px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        }
-        .navbar a {
-            text-decoration: none;
-            color: #636b6f;
-            margin-left: 20px;
-        }
-        .navbar a:hover {
-            text-decoration: underline;
-        }
-        .navbar-left a {
-            font-weight: bold;
-            font-size: 24px;
-            color: #000;
-        }
-        .hero {
-            position: relative;
-            text-align: center;
-            color: white;
-        }
-        .hero img {
-            width: 100%;
-            height: 100vh;
-            object-fit: cover;
-            filter: brightness(0.7);
-        }
-        .hero-text {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-        }
-        .hero-text h1 {
-            font-size: 2.5em;
-            margin: 0;
-        }
-        .hero-text p {
-            font-size: 1.5em;
+            font-family: 'Poppins', sans-serif;
         }
     </style>
 </head>
-<body class="antialiased">
-    <x-navbar></x-navbar>
-    <div class="hero">
-        <img src="{{ asset('images/background-dbd.png') }}" alt="Background Image">
-        <div class="hero-text">
-            <h1>Selamat Datang di SIPADU-DBD</h1>
-            <p>Kenali DBD, Tangani Sejak Dini.</p>
-            <p>Percayakan Diagnosamu pada SIPADU-DBD</p>
+<body class="bg-gray-900 text-white antialiased">
+
+    {{-- Navbar --}}
+    <x-navbar />
+
+    {{-- Hero Section --}}
+    <div class="relative h-screen overflow-hidden flex items-center justify-center text-center">
+        <img src="{{ asset('images/background-dbd.png') }}" alt="Background" class="absolute inset-0 w-full h-full object-cover brightness-50">
+        
+        <div class="relative z-10 px-4 max-w-2xl">
+            <p class="text-2xl text-gray-200 mb-4">
+                Kenali DBD, Tangani Sejak Dini.
+            </p>
+            <p class="text-xl text-gray-300 mb-6">
+                Percayakan diagnosamu pada SIPADU-DBD.
+            </p>
+
+            @if (Route::has('login'))
+            @auth
+                <a href="{{ route('diagnosis.form') }}"
+                   class="bg-red-600 hover:bg-red-700 text-white px-6 py-3 rounded-full font-semibold shadow-lg transition">
+                    Mulai Diagnosa
+                </a>
+            @else
+                <a href="{{ route('login') }}"
+                   class="mt-4 inline-block text-sm text-gray-300 hover:underline">
+                    Silakan login untuk memulai diagnosa.
+                </a>
+            @endauth
+        @endif
         </div>
     </div>
+
+    {{-- Footer --}}
+    <footer class="bg-yellow-900 text-center py-6 text-sm text-slate-300">
+        &copy; {{ date('Y') }} SIPADU-DBD. Diagnosa cerdas untuk hidup lebih sehat.
+    </footer>
+
 </body>
 </html>

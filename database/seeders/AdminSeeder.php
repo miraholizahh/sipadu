@@ -17,8 +17,8 @@ class AdminSeeder extends Seeder
     public function run(): void
     {
         DB::table('users')->insert([
-            'nama' => 'admin',
-            'email' => 'admin@gmail.com',
+            'nama' => 'rayhan',
+            'email' => 'rayhan@gmail.com',
             'telepon' => '089516982907',
             'password' => Hash::make('09876543'),
             'alamat' => 'Jl. Surya Kencana, Sawah Gede, Kec. Cianjur, Kabupaten Cianjur, Jawa Barat 43212',

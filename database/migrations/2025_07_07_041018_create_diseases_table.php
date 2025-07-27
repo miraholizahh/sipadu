@@ -11,10 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('dempster_shafers', function (Blueprint $table) {
+        Schema::create('diseases', function (Blueprint $table) {
             $table->id();
-            $table->float('belief');
-            $table->float('plausibility');
+            $table->string('kode_penyakit', 10)->unique();
+            $table->string('nama_penyakit', 255);
+            $table->text('keterangan');
             $table->timestamps();
         });
     }
@@ -24,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('dempster_shafers');
+        Schema::dropIfExists('diseases');
     }
 };

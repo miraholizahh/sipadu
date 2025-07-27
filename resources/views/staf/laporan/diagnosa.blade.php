@@ -37,6 +37,13 @@
             padding-left: 1rem;
             list-style-type: disc;
         }
+
+        .solusi-wrap {
+            max-width: 250px; /* batas maksimal lebar kolom */
+            white-space: pre-line;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+        }
     </style>
 
     <div class="py-12">
@@ -57,11 +64,12 @@
                             <button type="submit" class="inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700">
                                 Cari
                             </button>
-                            <a href="{{ route('laporan.diagnosa.print') }}" class="inline-flex items-center px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700">
+                            <a href="{{ route('laporan.diagnosa.print', ['from' => request('from'), 'to' => request('to')]) }}"
+                               class="inline-flex items-center px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700">
                                 Print PDF
                             </a>
                         </div>
-                    </form>                                    
+                    </form>
 
                     @php
                         function interpretasiKemungkinan($percent) {
@@ -99,7 +107,17 @@
                                     {{ $item->hasil_diagnosa ?? '-' }}%
                                     ({{ interpretasiKemungkinan($item->hasil_diagnosa) }})
                                 </td>
-                                <td>{{ $item->disease->solusi ?? '-' }}</td>
+                                <td>
+                                    <div class="solusi-wrap">
+                                        <ul>
+                                            @forelse ($item->disease->solutions ?? [] as $solusi)
+                                                <li>{{ $solusi->solusi }}</li>
+                                            @empty
+                                                <li>-</li>
+                                            @endforelse
+                                        </ul>
+                                    </div>
+                                </td>
                                 <td>
                                     <ul>
                                         @foreach ($item->symptom as $symptom)

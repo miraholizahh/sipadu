@@ -51,13 +51,21 @@
         <div class="section">
             <p><span class="label">Nama</span>: {{ $diagnosis->user->nama ?? '-' }}</p>
             <p><span class="label">Jenis Kelamin</span>: {{ $diagnosis->user->jenis_kelamin ?? '-' }}</p>
-            <p><span class="label">Tanggal Diagnosa</span>: {{ \Carbon\Carbon::parse($diagnosis->tanggal_diagnosa)->format('d-m-Y') }}</p>
+            <p><span class="label">Tanggal Diagnosa</span>: {{ \Carbon\Carbon::parse($diagnosis->tanggal_diagnosa)->format('d-m-Y H:i') }}</p>
         </div>
 
         <div class="section">
             <p><span class="label">Penyakit</span>: {{ $diagnosis->disease->nama_penyakit ?? '-' }}</p>
             <p><span class="label">Kemungkinan</span>: {{ $diagnosis->hasil_diagnosa ?? '-' }}%</p>
-            <p><span class="label">Solusi</span>: {{ $diagnosis->disease->solusi ?? '-' }}</p>
+            <p><span class="label">Solusi</span>:</p>
+                <ul>
+                    @forelse ($diagnosis->disease->solutions as $solusi)
+                        <li>{{ $solusi->solusi }}</li>
+                    @empty
+                        <li>-</li>
+                    @endforelse
+                </ul>
+
         </div>
 
         <div class="section">

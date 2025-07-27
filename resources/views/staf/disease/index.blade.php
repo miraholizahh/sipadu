@@ -49,6 +49,15 @@
             display: flex;
             align-items: center;
         }
+
+        .wrap-cell {
+            max-width: 300px;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+            line-height: 1.5;
+            vertical-align: top;
+        }
     </style>
 
     <div class="py-12">
@@ -66,7 +75,6 @@
                                 <th class="text-custom">Kode Penyakit</th>
                                 <th class="text-custom">Nama Penyakit</th>
                                 <th class="text-custom">Keterangan</th>
-                                <th class="text-custom">Solusi</th>
                                 <th class="text-custom">Aksi</th>
                             </tr>
                         </x-slot>
@@ -77,8 +85,7 @@
                             <td class="text-custom">{{ $num++ }}</td>
                             <td class="text-custom">{{ $disease->kode_penyakit }}</td>
                             <td class="text-custom">{{ $disease->nama_penyakit }}</td>
-                            <td class="text-custom">{{ $disease->keterangan }}</td>
-                            <td class="text-custom">{{ $disease->solusi }}</td>
+                            <td class="text-custom wrap-cell">{{ $disease->keterangan }}</td>
                             <td class="text-custom aksi-buttons">
                                 <x-warning-button tag="a" href="{{ route('disease.edit', $disease->id) }}" class="text-custom">
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -115,8 +122,8 @@
                                 Tindakan ini tidak dapat dibatalkan.
                             </p>
                             <div class="mt-6 flex justify-end">
-                                <x-secondary-button x-on:click="$dispatch('close')">Batal</x-secondary-button>
-                                <x-danger-button class="ml-3">Hapus</x-danger-button>
+                                <x-secondary-button x-on:click="$dispatch('close')">Tidak</x-secondary-button>
+                                <x-danger-button class="ml-3">Ya</x-danger-button>
                             </div>
                         </form>
                     </x-modal>

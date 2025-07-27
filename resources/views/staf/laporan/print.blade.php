@@ -47,7 +47,16 @@
                         @endphp
                         ({{ $desc }})
                     </td>
-                    <td>{{ $item->disease->solusi ?? '-' }}</td>
+                    <td>
+                        <ul>
+                            @forelse ($item->disease->solutions as $solusi)
+                                <li>{{ $solusi->solusi }}</li>
+                            @empty
+                                <li>-</li>
+                            @endforelse
+                        </ul>
+                    </td>
+                    
                     <td>
                         <ul>
                             @foreach ($item->symptom as $symptom)

@@ -7,10 +7,16 @@
 
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+            <div class="mb-4 bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
+                <div class="px-6 py-4">
+                    <h1 class="text-2xl font-bold text-gray-900 dark:text-white text-center">
+                        Selamat Datang di <span class="text-blue-600">SIPEDU-DBD</span>
+                    </h1>
+                </div>
+            </div>
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900 dark:text-gray-100">
                     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-
                         <div class="bg-blue-100 border shadow-sm rounded-xl p-4 md:p-5">
                             <h3 class="text-lg font-bold text-black flex items-center mb-2">
                                 <svg class="w-6 h-6 mr-2 text-black" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
@@ -48,7 +54,7 @@
                                 <svg class="w-6 h-6 mr-2 text-black" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v12m0-12a6 6 0 0 1 6 6m-6-6a6 6 0 0 0-6 6m6 6a6 6 0 0 1-6-6m6 6a6 6 0 0 0 6-6" />
                                 </svg>
-                                Knowledge Base
+                                Basis Pengetahuan
                             </h3>
                             <div class="text-4xl font-bold text-black text-center">{{ $knowledge_base_count }}</div>
                             <a href="{{ route('knowledge_base.index') }}" class="mt-4 inline-flex items-center gap-x-1 text-sm font-semibold text-black hover:text-yellow-700">
@@ -56,6 +62,24 @@
                                 <svg class="w-4 h-4 text-black" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                                     <path d="M9 18l6-6-6-6"></path>
                                 </svg>
+                            </a>
+                        </div>
+
+                        <div class="bg-gray-100 border shadow-sm rounded-xl p-4 md:p-5">
+                            <h3 class="text-lg font-bold text-black flex items-center mb-2">
+                                <svg class="w-5 h-5 text-gray-700 dark:text-white" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 3l7.5 4.5v4.5c0 5.25-3.5 9.75-7.5 10.5-4-0.75-7.5-5.25-7.5-10.5V7.5L12 3z" />
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4m0 0v4m0-4h4m-4 0H8" />
+                                  </svg>
+                                Solusi
+                            </h3>
+                            <div class="text-4xl font-bold text-black text-center">{{ $solution_count }}</div>
+                            <a href="{{ route('solution.index') }}" class="mt-4 inline-flex items-center gap-x-1 text-sm font-semibold text-black hover:text-yellow-700">
+                                Klik Informasi
+                                <svg class="w-5 h-5 text-gray-700 dark:text-white" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 3l7.5 4.5v4.5c0 5.25-3.5 9.75-7.5 10.5-4-0.75-7.5-5.25-7.5-10.5V7.5L12 3z" />
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4m0 0v4m0-4h4m-4 0H8" />
+                                  </svg>
                             </a>
                         </div>
 

@@ -26,7 +26,9 @@ class DempsterShaferController extends Controller
 
         foreach ($bpas as $index => $bpa) {
             $disease = $bpa->disease->id;
-            $belief = $inputGejala[$bpa->idSymptom];
+
+            // Validasi nilai belief agar tetap dalam rentang [0, 1]
+            $belief = max(0, min(1, $inputGejala[$bpa->idSymptom]));
 
             $m = [
                 $disease => $belief,
@@ -41,7 +43,9 @@ class DempsterShaferController extends Controller
 
                 foreach ($combinedBPA as $A => $m1) {
                     foreach ($m as $B => $m2) {
-                        $intersection = ($A == $B) ? $A : (($A == 'Θ' || $B == 'Θ') ? ($A == 'Θ' ? $B : $A) : null);
+                        $intersection = ($A == $B)
+                            ? $A
+                            : (($A == 'Θ' || $B == 'Θ') ? ($A == 'Θ' ? $B : $A) : null);
 
                         if ($intersection) {
                             if (!isset($newBPA[$intersection])) {
@@ -54,6 +58,13 @@ class DempsterShaferController extends Controller
                     }
                 }
 
+                // Jika terjadi konflik total, hentikan kombinasi, gunakan BPA terakhir
+                if ($conflict >= 1) {
+                    // Bisa juga log/beri peringatan jika diperlukan
+                    break; // hentikan penggabungan lebih lanjut
+                }
+
+                // Normalisasi dengan membagi total keyakinan dengan (1 - conflict)
                 foreach ($newBPA as $key => $value) {
                     $newBPA[$key] = $value / (1 - $conflict);
                 }
@@ -62,18 +73,25 @@ class DempsterShaferController extends Controller
             }
         }
 
+        if (empty($combinedBPA)) {
+            return null;
+        }
+
         arsort($combinedBPA);
+
         $topKey = array_key_first($combinedBPA);
         $beliefFinal = $combinedBPA[$topKey];
         $plausibilityFinal = 1 - ($combinedBPA['Θ'] ?? 0);
 
-        if ($topKey === 'Θ') return null;
+        if ($topKey === 'Θ') {
+            return null;
+        }
 
         return [
             'idDisease' => $topKey,
             'belief' => $beliefFinal,
             'plausibility' => $plausibilityFinal,
         ];
-}
+    }
 
 }

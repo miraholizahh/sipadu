@@ -28,12 +28,6 @@
                     <x-input-error class="mt-2" :messages="$errors->get('keterangan')" />
                 </div>
 
-                <div class="max-w-xl">
-                    <x-input-label for="solusi" value="Solusi" class="text-gray" />
-                    <x-text-input id="solusi" type="text" name="solusi" class="mt-1 block w-full text-black" value="{{ old('solusi') }}" required />
-                    <x-input-error class="mt-2" :messages="$errors->get('solusi')" />
-                </div>
-
                 <div class="flex items-center gap-4 mt-4">
                     <x-secondary-button tag="a" href="{{ route('disease.index') }}">Batal</x-secondary-button>
                     <x-primary-button name="save" value="true">Simpan</x-primary-button>

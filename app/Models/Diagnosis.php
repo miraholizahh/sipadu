@@ -16,7 +16,6 @@ class Diagnosis extends Model
         'hasil_diagnosa',
         'idUser',
         'idDisease',
-        'idDempsterShafer',
     ];
 
     public function user()
@@ -34,8 +33,4 @@ class Diagnosis extends Model
         return $this->belongsTo(Disease::class, 'idDisease');
     }
 
-    public function dempsterShafer()
-    {
-        return $this->belongsTo(DempsterShafer::class, 'idDempsterShafer');
-    }
 }
