@@ -24,53 +24,76 @@ class DempsterShaferController extends Controller
 
         $combinedBPA = [];
 
-        foreach ($bpas as $index => $bpa) {
-            $disease = $bpa->disease->id;
+        // Group berdasarkan gejala
+        $grouped = $bpas->groupBy('idSymptom');
 
-            // Validasi nilai belief agar tetap dalam rentang [0, 1]
-            $belief = max(0, min(1, $inputGejala[$bpa->idSymptom]));
+        foreach ($grouped as $symptomId => $items) {
+            if (!isset($inputGejala[$symptomId])) {
+                continue;
+            }
 
-            $m = [
-                $disease => $belief,
-                'Θ' => 1 - $belief
+            $belief = max(0, min(1, $inputGejala[$symptomId]));
+
+            // Ambil semua penyakit unik dari gejala ini
+            $diseases = $items->pluck('idDisease')->unique()->sort()->values();
+            $keyDiseases = $diseases->implode(',');
+
+            // BPA satu gejala
+            $m2 = [
+                $keyDiseases => $belief,
+                'Θ' => 1 - $belief,
             ];
 
-            if ($index === 0) {
-                $combinedBPA = $m;
-            } else {
-                $newBPA = [];
-                $conflict = 0;
+            if (empty($combinedBPA)) {
+                $combinedBPA = $m2;
+                continue;
+            }
 
-                foreach ($combinedBPA as $A => $m1) {
-                    foreach ($m as $B => $m2) {
-                        $intersection = ($A == $B)
-                            ? $A
-                            : (($A == 'Θ' || $B == 'Θ') ? ($A == 'Θ' ? $B : $A) : null);
+            $newBPA = [];
+            $conflict = 0;
 
-                        if ($intersection) {
-                            if (!isset($newBPA[$intersection])) {
-                                $newBPA[$intersection] = 0;
-                            }
-                            $newBPA[$intersection] += $m1 * $m2;
-                        } else {
-                            $conflict += $m1 * $m2;
+            foreach ($combinedBPA as $A => $m1_val) {
+                foreach ($m2 as $B => $m2_val) {
+                    $aSet = ($A === 'Θ') ? ['Θ'] : explode(',', $A);
+                    $bSet = ($B === 'Θ') ? ['Θ'] : explode(',', $B);
+
+                    // Hitung irisan
+                    if ($A === 'Θ') {
+                        $intersection = $bSet;
+                    } elseif ($B === 'Θ') {
+                        $intersection = $aSet;
+                    } else {
+                        $intersection = array_intersect($aSet, $bSet);
+                    }
+
+                    if (empty($intersection)) {
+                        $conflict += $m1_val * $m2_val;
+                    } else {
+                        $intersection = array_unique($intersection);
+                        sort($intersection);
+                        $key = implode(',', $intersection);
+
+                        if (!isset($newBPA[$key])) {
+                            $newBPA[$key] = 0;
                         }
+
+                        $newBPA[$key] += $m1_val * $m2_val;
                     }
                 }
-
-                // Jika terjadi konflik total, hentikan kombinasi, gunakan BPA terakhir
-                if ($conflict >= 1) {
-                    // Bisa juga log/beri peringatan jika diperlukan
-                    break; // hentikan penggabungan lebih lanjut
-                }
-
-                // Normalisasi dengan membagi total keyakinan dengan (1 - conflict)
-                foreach ($newBPA as $key => $value) {
-                    $newBPA[$key] = $value / (1 - $conflict);
-                }
-
-                $combinedBPA = $newBPA;
             }
+
+            if ($conflict < 1) {
+                foreach ($newBPA as $key => $val) {
+                    $newBPA[$key] = $val / (1 - $conflict); // Normalisasi
+                }
+            } else {
+                return [
+                    'message' => 'Konflik total saat menggabungkan gejala ' . $symptomId,
+                    'combinedBPA' => [],
+                ];
+            }
+
+            $combinedBPA = $newBPA;
         }
 
         if (empty($combinedBPA)) {
@@ -79,8 +102,16 @@ class DempsterShaferController extends Controller
 
         arsort($combinedBPA);
 
-        $topKey = array_key_first($combinedBPA);
-        $beliefFinal = $combinedBPA[$topKey];
+        // Ambil key tertinggi yang bukan Θ
+        foreach ($combinedBPA as $key => $value) {
+            if ($key !== 'Θ') {
+                $topKey = $key;
+                $beliefFinal = $value;
+                break;
+            }
+        }
+
+        $beliefFinal = $combinedBPA[$topKey] ?? 0;
         $plausibilityFinal = 1 - ($combinedBPA['Θ'] ?? 0);
 
         if ($topKey === 'Θ') {
@@ -93,5 +124,5 @@ class DempsterShaferController extends Controller
             'plausibility' => $plausibilityFinal,
         ];
     }
-
 }
+

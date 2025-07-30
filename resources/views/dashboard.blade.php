@@ -76,10 +76,9 @@
                             <div class="text-4xl font-bold text-black text-center">{{ $solution_count }}</div>
                             <a href="{{ route('solution.index') }}" class="mt-4 inline-flex items-center gap-x-1 text-sm font-semibold text-black hover:text-yellow-700">
                                 Klik Informasi
-                                <svg class="w-5 h-5 text-gray-700 dark:text-white" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 3l7.5 4.5v4.5c0 5.25-3.5 9.75-7.5 10.5-4-0.75-7.5-5.25-7.5-10.5V7.5L12 3z" />
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4m0 0v4m0-4h4m-4 0H8" />
-                                  </svg>
+                                <svg class="w-4 h-4 text-black" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                    <path d="M9 18l6-6-6-6"></path>
+                                </svg>
                             </a>
                         </div>
 

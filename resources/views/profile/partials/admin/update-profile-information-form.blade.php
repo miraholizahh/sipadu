@@ -19,7 +19,7 @@
 
         <div>
             <x-input-label for="nama" :value="__('Nama')" />
-            <x-text-input id="nama" name="nama" type="text" class="mt-1 block w-full" :value="old('nama', $user->name)" required autofocus autocomplete="nama" />
+            <x-text-input id="nama" name="nama" type="text" class="mt-1 block w-full" :value="old('nama', $user->nama)" required autofocus autocomplete="nama" />
             <x-input-error class="mt-2" :messages="$errors->get('nama')" />
         </div>
 

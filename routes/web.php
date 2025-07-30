@@ -39,7 +39,9 @@ Route::middleware('auth', 'role:admin')->group(function () {
 });
 
 Route::middleware(['auth', 'role:pasien'])->group(function () {
-    Route::get('/profile/user-edit', [ProfileController::class, 'edit2'])->name('profile.user-edit');
+    Route::get('/profile/user-edit', [ProfileController::class, 'edituser'])->name('profile.user-edit');
+    Route::patch('/profile/user-edit', [ProfileController::class, 'updateuser'])->name('profile.user-update');
+    Route::delete('/profile/user-edit', [ProfileController::class, 'destroyuser'])->name('profile.user-destroy');
 });
 
 Route::middleware(['auth', 'role:admin'])->group(function () {

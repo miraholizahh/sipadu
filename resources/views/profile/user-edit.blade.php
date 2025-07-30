@@ -13,21 +13,21 @@
         <section class="bg-white shadow-xl rounded-xl p-6 sm:p-8 mb-8">
             <h1 class="text-3xl font-bold text-gray-800 mb-6">Informasi Profil</h1>
             <div class="max-w-2xl">
-                @include('profile.partials.update-profile-information-form')
+                @include('profile.partials.patient.update-profile-information-form')
             </div>
         </section>
 
         <section class="bg-white shadow-xl rounded-xl p-6 sm:p-8 mb-8">
             <h2 class="text-2xl font-semibold text-gray-800 mb-4">Ubah Kata Sandi</h2>
             <div class="max-w-2xl">
-                @include('profile.partials.update-password-form')
+                @include('profile.partials.patient.update-password-form')
             </div>
         </section>
 
         <section class="bg-white shadow-xl rounded-xl p-6 sm:p-8">
             <h2 class="text-2xl font-semibold text-gray-800 mb-4">Hapus Akun</h2>
             <div class="max-w-2xl">
-                @include('profile.partials.delete-user-form')
+                @include('profile.partials.patient.delete-user-form')
             </div>
         </section>
     </main>

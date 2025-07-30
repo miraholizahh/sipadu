@@ -42,17 +42,16 @@ class DiagnosisController extends Controller
 
     $result = DempsterShaferController::store($inputGejala);
 
-    if (!$result || !isset($result['idDisease'])) {
-        return back()->with('error', 'Diagnosa gagal.');
-    }
+if ($result) {
+    $idDisease = explode(',', $result['idDisease'])[0]; // Ambil ID pertama jika ada beberapa
 
-    // Simpan hasil ke tabel diagnosis
     $diagnosis = Diagnosis::create([
         'tanggal_diagnosa' => Carbon::now(),
         'hasil_diagnosa' => round($result['belief'] * 100, 2),
         'idUser' => Auth::id(),
-        'idDisease' => $result['idDisease'],
+        'idDisease' => $idDisease,
     ]);
+}
 
     $diagnosis->symptom()->attach($request->symptoms);
 
