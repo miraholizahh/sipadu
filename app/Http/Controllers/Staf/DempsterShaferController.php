@@ -14,12 +14,25 @@ class DempsterShaferController extends Controller
 {
     public static function store(array $inputGejala)
     {
+        // Validasi minimal 3 gejala
+        if (count($inputGejala) < 3) {
+            return [
+                'status' => 'error',
+                'message' => 'Minimal harus memilih 3 gejala',
+                'data' => null
+            ];
+        }
+
         $bpas = KnowledgeBase::with(['symptom', 'disease'])
             ->whereIn('idSymptom', array_keys($inputGejala))
             ->get();
 
         if ($bpas->isEmpty()) {
-            return null;
+            return [
+                'status' => 'error',
+                'message' => 'Tidak ada data gejala yang cocok',
+                'data' => null
+            ];
         }
 
         $combinedBPA = [];
@@ -88,8 +101,9 @@ class DempsterShaferController extends Controller
                 }
             } else {
                 return [
+                    'status' => 'error',
                     'message' => 'Konflik total saat menggabungkan gejala ' . $symptomId,
-                    'combinedBPA' => [],
+                    'data' => null
                 ];
             }
 
@@ -97,12 +111,18 @@ class DempsterShaferController extends Controller
         }
 
         if (empty($combinedBPA)) {
-            return null;
+            return [
+                'status' => 'error',
+                'message' => 'Tidak ada hasil perhitungan yang valid',
+                'data' => null
+            ];
         }
 
         arsort($combinedBPA);
 
         // Ambil key tertinggi yang bukan Θ
+        $topKey = 'Θ';
+        $beliefFinal = 0;
         foreach ($combinedBPA as $key => $value) {
             if ($key !== 'Θ') {
                 $topKey = $key;
@@ -111,17 +131,24 @@ class DempsterShaferController extends Controller
             }
         }
 
-        $beliefFinal = $combinedBPA[$topKey] ?? 0;
         $plausibilityFinal = 1 - ($combinedBPA['Θ'] ?? 0);
 
         if ($topKey === 'Θ') {
-            return null;
+            return [
+                'status' => 'error',
+                'message' => 'Tidak dapat menentukan penyakit',
+                'data' => null
+            ];
         }
 
         return [
-            'idDisease' => $topKey,
-            'belief' => $beliefFinal,
-            'plausibility' => $plausibilityFinal,
+            'status' => 'success',
+            'message' => 'Perhitungan berhasil',
+            'data' => [
+                'idDisease' => $topKey,
+                'belief' => $beliefFinal,
+                'plausibility' => $plausibilityFinal,
+            ]
         ];
     }
 }

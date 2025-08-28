@@ -30,8 +30,6 @@
                     <thead class="bg-gray-200 text-gray-700">
                         <tr>
                             <th class="border px-4 py-3">No</th>
-                            <th class="border px-4 py-3">Nama</th>
-                            <th class="border px-4 py-3">Jenis Kelamin</th>
                             <th class="border px-4 py-3">Tanggal</th>
                             <th class="border px-4 py-3">Penyakit</th>
                             <th class="border px-4 py-3">Kemungkinan</th>
@@ -45,8 +43,6 @@
                         @forelse ($diagnosis as $item)
                             <tr class="hover:bg-blue-50">
                                 <td class="border px-4 py-2">{{ $no++ }}</td>
-                                <td class="border px-4 py-2">{{ $item->user->nama ?? '-' }}</td>
-                                <td class="border px-4 py-2">{{ $item->user->jenis_kelamin ?? '-' }}</td>
                                 <td class="border px-4 py-2">{{ \Carbon\Carbon::parse($item->tanggal_diagnosa)->format('d-m-Y') }}</td>
                                 <td class="border px-4 py-2">{{ $item->disease->nama_penyakit ?? '-' }}</td>
                                 <td class="border px-4 py-2">

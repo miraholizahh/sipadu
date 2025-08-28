@@ -22,43 +22,53 @@ class DiagnosisController extends Controller
     }
 
     public function store(Request $request)
-{
-    $request->validate([
-        'symptoms' => 'required|array|min:1',
-        'symptoms.*' => 'exists:symptoms,id',
-    ]);
+    {
+        $request->validate([
+            'symptoms' => 'required|array|min:3', // Ubah min:1 menjadi min:3
+            'symptoms.*' => 'exists:symptoms,id',
+        ]);
 
-    // Siapkan array [idSymptom => bobot]
-    $knowledgeBase = KnowledgeBase::whereIn('idSymptom', $request->symptoms)->get();
+        // Siapkan array [idSymptom => bobot]
+        $knowledgeBase = KnowledgeBase::whereIn('idSymptom', $request->symptoms)->get();
 
-    if ($knowledgeBase->isEmpty()) {
-        return back()->with('error', 'Gejala tidak ditemukan dalam basis pengetahuan.');
+        if ($knowledgeBase->isEmpty()) {
+            return back()->with('error', 'Gejala tidak ditemukan dalam basis pengetahuan.');
+        }
+
+        $inputGejala = [];
+        foreach ($knowledgeBase as $item) {
+            $inputGejala[$item->idSymptom] = $item->bobot;
+        }
+
+        $result = DempsterShaferController::store($inputGejala);
+
+        // Periksa status hasil
+        if (!$result || $result['status'] === 'error') {
+            return back()->with('error', $result['message'] ?? 'Terjadi kesalahan dalam proses diagnosa.');
+        }
+
+        try {
+            // Ambil data hasil diagnosa
+            $resultData = $result['data'];
+            $idDisease = explode(',', $resultData['idDisease'])[0]; // Ambil ID pertama jika ada beberapa
+
+            $diagnosis = Diagnosis::create([
+                'tanggal_diagnosa' => Carbon::now(),
+                'hasil_diagnosa' => round($resultData['belief'] * 100, 2),
+                'idUser' => Auth::id(),
+                'idDisease' => $idDisease,
+            ]);
+
+            $diagnosis->symptom()->attach($request->symptoms);
+
+            return redirect()
+                ->route('diagnosis.result', $diagnosis->id)
+                ->with('success', 'Diagnosa berhasil disimpan.');
+
+        } catch (\Exception $e) {
+            return back()->with('error', 'Terjadi kesalahan saat menyimpan hasil diagnosa.');
+        }
     }
-
-    $inputGejala = [];
-    foreach ($knowledgeBase as $item) {
-        $inputGejala[$item->idSymptom] = $item->bobot;
-    }
-
-    $result = DempsterShaferController::store($inputGejala);
-
-if ($result) {
-    $idDisease = explode(',', $result['idDisease'])[0]; // Ambil ID pertama jika ada beberapa
-
-    $diagnosis = Diagnosis::create([
-        'tanggal_diagnosa' => Carbon::now(),
-        'hasil_diagnosa' => round($result['belief'] * 100, 2),
-        'idUser' => Auth::id(),
-        'idDisease' => $idDisease,
-    ]);
-}
-
-    $diagnosis->symptom()->attach($request->symptoms);
-
-    return redirect()
-        ->route('diagnosis.result', $diagnosis->id)
-        ->with('success', 'Diagnosa berhasil disimpan.');
-}
 
     public function show($id)
     {

@@ -25,29 +25,32 @@
   
       <div id="navbar-with-collapse" class="hidden transition-all duration-100 overflow-hidden basis-full grow sm:block sm:basis-auto sm:ml-auto">
         <div class="flex flex-col gap-5 mt-5 sm:flex-row sm:items-center sm:justify-end sm:mt-0 sm:ps-5">
-            <a class="font-bold text-sm uppercase tracking-wide text-white hover:text-rose-200" href="homenav">Beranda</a>
-            <a class="font-bold text-sm uppercase tracking-wide text-white hover:text-rose-200" href="profilenav">Tentang</a>
-            <a class="font-bold text-sm uppercase tracking-wide text-white hover:text-rose-200" href="contactnav">Kontak</a>
             @if(Route::has('login'))
-            @auth 
-            <a class="font-bold text-sm uppercase tracking-wide text-white hover:text-rose-200" href="{{ route('diagnosis.form') }}">Diagnosa</a>
-            <a class="font-bold text-sm uppercase tracking-wide text-white hover:text-rose-200" href="{{ route('diagnosis.riwayat') }}">Riwayat Diagnosa</a>
-            <a class="font-bold text-sm uppercase tracking-wide text-white hover:text-rose-200" href="{{ route('profile.user-edit') }}">Profil</a>
-            <div class="font-bold text-sm uppercase tracking-wide text-white hover:text-rose-200">
-                <form method="POST" action="{{ route('logout') }}" class="inline">
-                    @csrf
-                    <button type="submit" class="font-bold text-sm uppercase tracking-wide text-white hover:text-rose-200 transition">
-                      Keluar
-                    </button>
-                </form>
-            </div>
-            @else
-            <a class="font-bold text-sm uppercase tracking-wide text-white hover:text-rose-200" href="{{ route('login') }}">Masuk</a>
-            <a class="font-bold text-sm uppercase tracking-wide text-white hover:text-rose-200" href="{{ route('register') }}">Registrasi</a>
-            @endauth
+                @auth
+                    <!-- Menu untuk pasien yang sudah login -->
+                    <a class="font-bold text-sm uppercase tracking-wide text-white hover:text-rose-200" href="homenav">Beranda</a>
+                    <a class="font-bold text-sm uppercase tracking-wide text-white hover:text-rose-200" href="{{ route('diagnosis.form') }}">Diagnosa</a>
+                    <a class="font-bold text-sm uppercase tracking-wide text-white hover:text-rose-200" href="{{ route('diagnosis.riwayat') }}">Riwayat Diagnosa</a>
+                    <a class="font-bold text-sm uppercase tracking-wide text-white hover:text-rose-200" href="{{ route('profile.user-edit') }}">Profil</a>
+                    <div class="font-bold text-sm uppercase tracking-wide text-white hover:text-rose-200">
+                        <form method="POST" action="{{ route('logout') }}" class="inline">
+                            @csrf
+                            <button type="submit" class="font-bold text-sm uppercase tracking-wide text-white hover:text-rose-200 transition">
+                                Logout
+                            </button>
+                        </form>
+                    </div>
+                @else
+                    <!-- Menu untuk pengunjung yang belum login -->
+                    <a class="font-bold text-sm uppercase tracking-wide text-white hover:text-rose-200" href="homenav">Beranda</a>
+                    <a class="font-bold text-sm uppercase tracking-wide text-white hover:text-rose-200" href="profilenav">Tentang</a>
+                    <a class="font-bold text-sm uppercase tracking-wide text-white hover:text-rose-200" href="contactnav">Kontak</a>
+                    <a class="font-bold text-sm uppercase tracking-wide text-white hover:text-rose-200" href="{{ route('login') }}">Login</a>
+                    <a class="font-bold text-sm uppercase tracking-wide text-white hover:text-rose-200" href="{{ route('register') }}">Registrasi</a>
+                @endauth
             @endif
         </div>
-    </div>
+      </div>
        
     </nav>
   </header>
